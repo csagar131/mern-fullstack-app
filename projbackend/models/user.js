@@ -45,7 +45,7 @@ const userSchema = new Schema({
     type: Array,
     default: [],
   },
-});
+}, { timestamps : true});
 
 // defining virtuals : virtuals dont get stored inside db but it can be accessed at model level
 userSchema.virtuals("password").set(function(password){
