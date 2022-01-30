@@ -27,6 +27,7 @@ app.use(cors());
 
 // Routes
 app.use("/api", require("./routes/auth"))
+app.use("/api", require("./routes/user"))
 
 const port = process.env.PORT;
 app.listen(port, () => {  console.log(`app is running at ${port}`)});

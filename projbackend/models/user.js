@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from "uuid";
+const { v4: uuidv4 } = require('uuid');
 
 const mongoose = require("mongoose");
-const { createHmac } = await import("crypto");
+const { createHmac } = require("crypto");
 
 const { Schema } = mongoose;
 
@@ -12,11 +12,11 @@ const userSchema = new Schema({
     maxlength: 32,
     trim: true,
   },
-  lastname: {
-    type: String,
-    maxlength: 32,
-    trim: true,
-  },
+  // lastname: {
+  //   type: String,
+  //   maxlength: 32,
+  //   trim: true,
+  // },
   email: {
     type: String,
     trim: true,
@@ -26,7 +26,7 @@ const userSchema = new Schema({
   userinfo: {
     type: String,
     trim: true,
-  },
+  },  
 
   encry_password: {
     type: String,
@@ -47,8 +47,8 @@ const userSchema = new Schema({
   },
 }, { timestamps : true});
 
-// defining virtuals : virtuals dont get stored inside db but it can be accessed at model level
-userSchema.virtuals("password").set(function(password){
+// defining virtual : virtual dont get stored inside db but it can be accessed at model level
+userSchema.virtual("password").set(function(password){
         this._password = password;     // storing plain password into private variable
         this.salt = uuidv4();    // setting the salt before calling securepassword
         this.encry_password = this.securePassword(password);   //calling securePassword method from custom method
@@ -58,7 +58,7 @@ userSchema.virtuals("password").set(function(password){
 
 
 // defining custome method to userSchema
-userSchema.method = {
+userSchema.methods = {
   securePassword: function (plainpassword) {
     if (!plainpassword) return "";
     try {
